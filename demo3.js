@@ -135,6 +135,8 @@ Game.prototype.update = function() {
     if(this.interval == this.spawnInterval){
         this.interval = 0;
     }
+    this.score++;
+	this.maxScore = (this.score > this.maxScore) ? this.score : this.maxScore;
     var self = this;
     setTimeout(function () {
         self.update();
@@ -160,6 +162,14 @@ Game.prototype.display = function() {
     this.ctx.rotate(Math.PI / 2 * this.bird.gravity / 20);
     this.ctx.drawImage(images.bird, -this.bird.width / 2, -this.bird.height / 2, this.bird.width, this.bird.height);
     this.ctx.restore();
+    
+    this.ctx.fillStyle = "white";
+	this.ctx.font="20px Oswald, sans-serif";
+	this.ctx.fillText("Score : "+ this.score, 10, 25);
+	this.ctx.fillText("Max Score : "+this.maxScore, 10, 50);
+	this.ctx.fillText("Generation : "+this.generation, 10, 75);
+	this.ctx.fillText("Alive : "+this.alives+" / "+Neuvol.options.population, 10, 100);
+    
     var self = this;
     requestAnimationFrame(function () {
         self.display();
